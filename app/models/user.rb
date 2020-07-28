@@ -4,8 +4,8 @@ class User < ApplicationRecord
     has_many :user_coins
     has_many :coins, through: :user_coins
 
-    has_many :coins_user_comments
-    has_many :coins, through: :coins_user_comments
+    has_many :coin_user_comments
+    has_many :coins, through: :coin_user_comments
 
 #exchanges:
 

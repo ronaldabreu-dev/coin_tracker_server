@@ -1,17 +1,19 @@
 class Api::V1::UserCoinsController < ApplicationController
 
   def create
+    puts params
+    @current_user = User.find_by(user_name: params['user_name'])
 
-    @current_user = User.find_by(user_name: params[:coinObj][:"\"user_name\""])
-
-    if @current_user.coins.map{|s| s.symbol}.include?(params[:coinObj][:"\"symbol\""])
+    if @current_user.coins.map{|s| s.symbol}.include?(params['symbol'])
     render json: {"message": "Already tracking!"}
     else
-      @coin = Coin.create(symbol: params[:coinObj][:"\"symbol\""])
+      @coin = Coin.create(symbol: params['symbol'])
       @current_user.coins.push(@coin)
-      render json: @current_user.coins
+      response = []
+      response.push(@current_user)
+      response.push(@current_user.coins)
+    render json: response
     end
-
   end
 
   def show

@@ -9,10 +9,13 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(name: params[:session][:name])
+    user = User.find_by(user_name: params[:session][:username])
 
     if user && user.authenticate(params[:session][:password])
-    render json: user.coins
+      response = []
+      response.push(user)
+      response.push(user.coins)
+    render json: response
     else
     full_message = ["wrong password or username"]
     render json: full_message
