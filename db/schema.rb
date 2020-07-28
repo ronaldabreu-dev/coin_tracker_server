@@ -14,7 +14,8 @@ ActiveRecord::Schema.define(version: 2020_07_24_151920) do
 
   create_table "coin_user_comments", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "coin_id"
+    t.text "coin_id"
+    t.text "comment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
