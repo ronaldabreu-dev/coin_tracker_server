@@ -9,7 +9,7 @@ class Api::V1::CommentsController < ApplicationController
     end
 
     def create
-
+    response = []
       @current_user = User.find_by(user_name: params[:username])
         symbols = Coin.all.map { |e| e.symbol }
 
@@ -27,7 +27,8 @@ class Api::V1::CommentsController < ApplicationController
 
         @current_user.coin_user_comments.push(@comment)
         @coin.coin_user_comments.push(@comment)
-        render json: @coin.coin_user_comments
+        response.push(@coin.coin_user_comments)
+        render json: response
     end
 
 
