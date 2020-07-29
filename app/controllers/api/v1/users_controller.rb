@@ -11,7 +11,11 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(new_user_params)
 
     if user.save
-     render json: user
+      response = []
+      response.push(user)
+      user.coins = []
+      response.push(user.coins)
+     render json: response
     else
      render json: user.errors.full_messages
     end
