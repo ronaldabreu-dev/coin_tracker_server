@@ -1,8 +1,12 @@
 class Api::V1::CommentsController < ApplicationController
   class Api::V1::CoinUserCommentsController < ApplicationController
 
-    def create
+    def index
+        comments = CoinUserComment.all
+        render json:comments
+    end
 
+    def create
       @current_user = User.find_by(user_name: params[:coinObj][:"\"user_name\""])
 
         @comment = CoinUserComment.create(
