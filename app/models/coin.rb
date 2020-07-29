@@ -4,4 +4,7 @@ class Coin < ApplicationRecord
 
   has_many :coin_user_comments
   has_many :users, through: :coin_user_comments
+
+  validates :symbol, presence: true
+  validates :symbol, uniqueness: true
 end

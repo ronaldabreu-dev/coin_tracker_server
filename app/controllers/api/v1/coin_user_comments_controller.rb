@@ -2,6 +2,7 @@ class Api::V1::CommentsController < ApplicationController
   class Api::V1::CoinUserCommentsController < ApplicationController
 
     def index
+      byebug
         puts params
         comments = CoinUserComment.all
         render json:comments
@@ -11,8 +12,7 @@ class Api::V1::CommentsController < ApplicationController
 
       @current_user = User.find_by(user_name: params[:username])
         symbols = Coin.all.map { |e| e.symbol }
-     puts symbols
-     
+
          if symbols.include?(params[:symbol])
         @coin = Coin.find_by(symbol: params[:symbol])
          else
@@ -31,17 +31,27 @@ class Api::V1::CommentsController < ApplicationController
     end
 
 
-    def show
+def show
+    symbols = Coin.all.map { |e| e.symbol }
+    response = []
 
-    @current_user = User.find_by(user_name: params[:id])
-    render json: @current_user.coin_user_comments
+   if symbols.include?(params[:id])
 
-    end
+    @coin = Coin.find_by(symbol: params[:id])
+    response.push(@coin.coin_user_comments)
+  else
+    @coin = "coin not found"
+    response.push(@coin)
+   end
+
+    render json: response
+
+end
 
     private
 
     def coin_user_comments_params
-     params.require(:commentObj).permit!
+     params.require(:coin_user_comments).permit!
     end
 
 
