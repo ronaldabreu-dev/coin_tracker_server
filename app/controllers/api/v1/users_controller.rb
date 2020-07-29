@@ -9,7 +9,6 @@ class Api::V1::UsersController < ApplicationController
     new_user_params["password"] = params["password"]
 
     user = User.new(new_user_params)
-
     if user.save
       response = []
       response.push(user)
