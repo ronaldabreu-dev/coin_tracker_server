@@ -28,6 +28,7 @@ class Api::V1::CommentsController < ApplicationController
         @current_user.coin_user_comments.push(@comment)
         @coin.coin_user_comments.push(@comment)
         response.push(@coin.coin_user_comments)
+        response.push(@current_user.user_name)
         render json: response
     end
 
@@ -40,13 +41,14 @@ def show
 
     @coin = Coin.find_by(symbol: params[:id])
     response.push(@coin.coin_user_comments)
+    response.push("")
+    render json: response
   else
     @coin = "coin not found"
     response.push(@coin)
    end
 
-    render json: response
-
+  
 end
 
     private

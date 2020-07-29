@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   skip_before_action :auth_user, only: [:new, :create]
-  before_action :find_user, only: [:edit, :update, :destroy]
+  before_action :find_user, only: [:show, :edit, :update, :destroy]
 
   def create
      puts params
@@ -22,7 +22,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-
+puts params
     if @user
      render json: @user
     else
@@ -38,7 +38,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def find_user
-   @user = User.find_by(user_name:params[:id])
+   @user = User.find(params[:id])
   end
 
 end
