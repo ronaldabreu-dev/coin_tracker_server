@@ -46,6 +46,8 @@ def show
   else
     @coin = ["coin not found"]
     response.push(@coin)
+    response.push("")
+    render json: response
    end
 
 
