@@ -1,5 +1,5 @@
-class Api::V1::CommentsController < ApplicationController
-  class Api::V1::CoinUserCommentsController < ApplicationController
+class Api::V1::CoinUserCommentsController < ApplicationController
+skip_before_action :authorized, only: [:index, :show]
 
     def index
       byebug
@@ -61,4 +61,3 @@ end
 
 
   end
-end

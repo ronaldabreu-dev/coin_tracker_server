@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :auth_user, only: [:new, :create]
+ skip_before_action :authorized, only: [:create, :show]
   before_action :find_user, only: [:show, :edit, :update, :destroy]
 
   def create
@@ -10,13 +10,18 @@ class Api::V1::UsersController < ApplicationController
 
     user = User.new(new_user_params)
     if user.save
+
       response = []
       response.push(user)
+
       user.coins = []
       response.push(user.coins)
-     render json: response
+
+      token = encode_token(user_id: user.id)
+      response.push(token)
+     render json: response, status: :created
     else
-     render json: user.errors.full_messages
+     render json: user.errors.full_messages, status: :not_acceptable
     end
 
   end
