@@ -48,7 +48,7 @@ class Api::V1::UserCoinsController < ApplicationController
         @coin = Coin.find_by(symbol: params['symbol'])
 
         @current_user.coins.delete(@coin)
-
+         
         response = []
         response.push(@current_user)
         response.push(@current_user.coins)

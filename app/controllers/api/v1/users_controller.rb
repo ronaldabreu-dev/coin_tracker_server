@@ -11,7 +11,7 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(new_user_params)
     if user.save
 
-      response = []
+      response = [] 
       response.push(user)
 
       user.coins = []

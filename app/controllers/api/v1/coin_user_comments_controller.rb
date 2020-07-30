@@ -1,13 +1,6 @@
 class Api::V1::CoinUserCommentsController < ApplicationController
 skip_before_action :authorized, only: [:index, :show]
 
-    def index
-      byebug
-        puts params
-        comments = CoinUserComment.all
-        render json:comments
-    end
-
     def create
     response = []
       @current_user = User.find_by(user_name: params[:username])
@@ -27,7 +20,9 @@ skip_before_action :authorized, only: [:index, :show]
 
         @current_user.coin_user_comments.push(@comment)
         @coin.coin_user_comments.push(@comment)
-        response.push(@coin.coin_user_comments)
+
+        comments = Comment.all.map { |c| c.coin_id == @coin.id }
+        response.push(comments)
         response.push(@current_user.user_name)
         render json: response
     end
