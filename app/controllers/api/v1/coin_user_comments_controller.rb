@@ -44,11 +44,11 @@ def show
     response.push("")
     render json: response
   else
-    @coin = "coin not found"
+    @coin = ["coin not found"]
     response.push(@coin)
    end
 
-  
+
 end
 
     private
