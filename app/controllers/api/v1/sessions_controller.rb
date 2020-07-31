@@ -34,8 +34,6 @@ class Api::V1::SessionsController < ApplicationController
     if(user)
       response = []
       response.push(user)
-
-      user.coins = []
       response.push(user.coins)
 
       token = encode_token(user_id: user.id)
