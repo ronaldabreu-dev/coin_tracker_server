@@ -21,8 +21,7 @@ skip_before_action :authorized, only: [:index, :show]
         @current_user.coin_user_comments.push(@comment)
         @coin.coin_user_comments.push(@comment)
 
-        comments = Comment.all.map { |c| c.coin_id == @coin.id }
-        response.push(comments)
+        response.push(@coin.coin_user_comments)
         response.push(@current_user.user_name)
         render json: response
     end
@@ -39,7 +38,7 @@ def show
     response.push("")
     render json: response
   else
-    @coin = ["coin not found"]
+    @coin = "coin not found"
     response.push(@coin)
     response.push("")
     render json: response
