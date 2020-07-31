@@ -1,5 +1,5 @@
 class Api::V1::SessionsController < ApplicationController
- skip_before_action :authorized, only: [:create]
+ skip_before_action :authorized, only: [:create, :auto_login]
 
   def destroy
     user = User.find_by(user_name: params[:session][:name])
@@ -28,4 +28,29 @@ class Api::V1::SessionsController < ApplicationController
 
   end
 
+  def auto_login
+    user = User.find_by(id: request.headers["Authorization"])
+
+    if(user)
+      response = []
+      response.push(user)
+
+      user.coins = []
+      response.push(user.coins)
+
+      token = encode_token(user_id: user.id)
+      response.push(token)
+
+      render json: response
+    else
+      render json: {errors: "User not found."}
+    end
+
+  end
+
+  private
+
+  def user_params
+   params.require(:user).permit!
+  end
 end
